@@ -1,6 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { BASE_URL, API_KEY } from '../constants'
 import axios from 'axios'
+import styled, { keyframes } from 'styled-components';
+import { Button } from 'reactstrap';
+
+const kf = keyframes`
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateZ(0);
+  }
+`
+
+const StyledDetails = styled.div`
+  opacity: 0;
+  transform: scale(2) rotateZ(180deg);
+  animation: ${kf} 0.5s ease-in-out forwards;
+
+  background-color: ${props => props.color ? props.color : 'lemonchiffon'};
+  p {
+    color: ${props => props.theme.tertiaryColor};
+  }
+  h2 {
+    color: ${props => props.theme.primaryColor};
+  }
+`
 
 export default function Details(props) {
   const { friendId, close } = props
@@ -13,7 +36,7 @@ export default function Details(props) {
   }, [friendId])
 
   return (
-    <div className='container'>
+    <StyledDetails className='container' color='red'>
       <h2>Details:</h2>
       {
         details &&
@@ -28,7 +51,7 @@ export default function Details(props) {
           </ul>
         </>
       }
-      <button onClick={close}>Close</button>
-    </div>
+      <Button color="success" onClick={close}>Close</Button>
+    </StyledDetails>
   )
 }
